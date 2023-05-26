@@ -11,6 +11,7 @@ export default function AddOAuthTodos () {
     title: "",
     content: "",
   })
+  const [pic, setPic] = useState()
 
   const [OAuthuser, setOauthUser] = useContext(UserOauthContext)
     console.log(OAuthuser);
@@ -23,6 +24,8 @@ export default function AddOAuthTodos () {
 }
 
 console.log(ovalues);
+console.log(pic);
+
 
 
 
@@ -30,10 +33,7 @@ console.log(ovalues);
 const handleAddOAuth = (e: ChangeEvent<HTMLFormElement>) => {
   e.preventDefault()
   console.log("add");
-
-  
   const url ="http://localhost:5051/api/v1/oauth/todos"
-
 
   try {
     const { title, content } = ovalues
@@ -41,7 +41,8 @@ const handleAddOAuth = (e: ChangeEvent<HTMLFormElement>) => {
     fetch(url, {
         body: JSON.stringify({
             title,
-            content
+            content,
+            pic
         }),
         method:"POST",
         credentials: "include",
@@ -55,6 +56,36 @@ const handleAddOAuth = (e: ChangeEvent<HTMLFormElement>) => {
     console.log(error);
 }
 }
+
+
+
+
+const handleUploadImage = async (image) => {
+    console.log(image);
+    
+    if (image.type === "image/jpeg" || image.type === "image/png") {
+      const data = new FormData()
+      data.append("file", image)
+      data.append("upload_preset", "deer-project")
+      data.append("cloud_name", "dw9jbhowf")
+
+
+      await fetch("https://api.cloudinary.com/v1_1/dw9jbhowf/image/upload", {
+        method: "POST", 
+        body: data,
+      })
+      .then(res => res.json())
+      .then(data => {
+        setPic(data.url.toString())
+        // console.log(data.url.toString());
+        
+      })
+      .catch((err) => {
+        console.log(err);
+        
+      })
+    } 
+  }
 return (
 <>
 <form 
@@ -75,7 +106,13 @@ return (
             
             onChange={handleOChange}  id="content" name="content" title="content" >
             </Input>
-            
+
+            <input 
+            type="file"
+            accept='image/*'
+            onChange={(e) => handleUploadImage(e.target.files[0])}  />
+
+    
               </div>
 
              <button 

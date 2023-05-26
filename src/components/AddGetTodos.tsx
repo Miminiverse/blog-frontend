@@ -10,6 +10,7 @@ export default function AddGetTodos ({setTodos}) {
     title: "",
     content: "",
   })
+  const [image, setImage] = useState()
 
   const [OAuthuser, setOauthUser] = useContext(UserOauthContext)
 
@@ -19,7 +20,31 @@ export default function AddGetTodos ({setTodos}) {
       ...values, 
       [e.target.name] : e.target.value})
 }
-console.log(values);
+
+
+  const handleUploadImage = (image) => {
+    console.log(image);
+    
+    // if (image.type === "image/jpeg" || image.type === "image/png") {
+    //   const data = new FormData()
+    //   data.append("file", image)
+    //   data.append("upload_preset", "deer-project")
+    //   data.append("cloud_name", "dw9jbhowf")
+    //   fetch("https://api.cloudinary.com/v1_1/dw9jbhowf", {
+    //     method: "POST", 
+    //     body: data
+    //   })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setImage(data.url.toString())
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+        
+    //   })
+    // } 
+  }
+
 
 
 const handleAdd = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -48,6 +73,8 @@ const handleAdd = async (e: ChangeEvent<HTMLFormElement>) => {
     console.log(error);
 }
 }
+
+
 return (
 <>
 <form 
@@ -60,15 +87,20 @@ return (
             <Input 
            onChange={handleChange} id="title" name="title" title="title" >
             </Input>
-      
               </div>
               <div>
                 Content
               <Input 
-            
             onChange={handleChange}  id="content" name="content" title="content" >
             </Input>
-            
+            <form>
+            <input 
+            type="file"
+            accept='image/*'
+            onChange={(e) => handleUploadImage(e.target.files[0])}   >
+            </input>
+            </form>
+
               </div>
 
              <button 

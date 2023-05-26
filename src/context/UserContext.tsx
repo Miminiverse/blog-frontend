@@ -27,11 +27,11 @@ export const UserOauthContextProvider = ({children}) => {
     }))
 
     useEffect(() => {
-        axios.get("http://localhost:5051/account", { withCredentials: true})
+        axios.get("http://localhost:5051/account", {withCredentials: true})
         .then( res => {
             if (res.data) {
                 console.log({...res.data});
-                setUserOauth({...res.data})
+                // setUserOauth({...res.data})
             }
         })
     }, [])
