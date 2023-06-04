@@ -11,7 +11,7 @@ export const UserContextProvider = ({children}) => {
 
 
     return (
-        <UserContext.Provider value={[user, setUser]}>
+        <UserContext.Provider value={{user, setUser}}>
             {children}
         </UserContext.Provider>
         
@@ -31,14 +31,15 @@ export const UserOauthContextProvider = ({children}) => {
         .then( res => {
             if (res.data) {
                 console.log({...res.data});
-                // setUserOauth({...res.data})
+                setUserOauth({...res.data})
             }
         })
+
     }, [])
 
 
     return (
-        <UserOauthContext.Provider value={[userOauth, setUserOauth]}>
+        <UserOauthContext.Provider value={{userOauth, setUserOauth}}>
             {children}
         </UserOauthContext.Provider>
         

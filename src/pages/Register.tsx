@@ -28,7 +28,7 @@ const Register = () => {
     const url = "https://todos-api-miminiverse.onrender.com/api/v1/auth/register"
 
 
-    const [user, setUser]= useContext(UserContext)
+    const {user, setUser}= useContext(UserContext)
 
 
     const [values, setValues] = useState<Values>({

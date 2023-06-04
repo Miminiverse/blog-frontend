@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styles from '@asset/App.module.css'
 import Input from '../forms/Input';
 import axios from 'axios';
-import {UserContext, UserOauthContext} from "../context/UserContext";
+import {UserOauthContext} from "../context/UserContext";
 
 export default function AddOAuthTodos () {
 
@@ -13,8 +13,8 @@ export default function AddOAuthTodos () {
   })
   const [pic, setPic] = useState()
 
-  const [OAuthuser, setOauthUser] = useContext(UserOauthContext)
-    console.log(OAuthuser);
+  const {userOauth, setUserOauth}= useContext(UserOauthContext)
+
   
 
   function handleOChange (e: ChangeEvent<HTMLInputElement>): void{
@@ -22,9 +22,6 @@ export default function AddOAuthTodos () {
       ...ovalues, 
       [e.target.name] : e.target.value})
 }
-
-console.log(ovalues);
-console.log(pic);
 
 
 
@@ -111,7 +108,6 @@ return (
             type="file"
             accept='image/*'
             onChange={(e) => handleUploadImage(e.target.files[0])}  />
-
     
               </div>
 

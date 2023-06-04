@@ -12,7 +12,7 @@ import GetOAuthTodos from './components/GetOAuthTodos';
 
 function App() {
   const [jwt, setJwt] = useState<string | null>(null)
-  const [OAuthuser, setOauthUser] = useContext(UserOauthContext)
+  const {OAuthuser, setOauthUser} = useContext(UserOauthContext)
 
 
 

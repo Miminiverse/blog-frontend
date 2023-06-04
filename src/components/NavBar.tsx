@@ -1,24 +1,28 @@
 import React, {useContext, useState} from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 import paths from '../paths/paths'
 import burger from '../assets/burger.svg'
 import axios from 'axios'
 import styles from '../assets//NavBar.module.css'
-import {UserContext} from "../context/UserContext";
+import {UserOauthContext} from "../context/UserContext";
 
 const NavBar = () => {
     const [showNav, setShowNav] = useState<boolean>(false)
-    const [user, setUser]= useContext(UserContext)
+    const {userOauth, setUserOauth}= useContext(UserOauthContext)
+    const navigate = useNavigate()
 
     const toggleNavItems = () => {
         setShowNav(!showNav)
     }
 
     const handleGoogleLogout = () => {
+      console.log("click delete")
       axios.get("http://localhost:5051/auth/logout", {withCredentials: true})
       .then (res => {
-        if (res.data) {
-          console.log(res.data);
+        if (res.data === "success") {
+          // console.log(res.data);
           window.location.href = "/"
+          // navigate("/")
         }
       })
     }

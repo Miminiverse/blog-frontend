@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import {UserContext} from "../context/UserContext";
+import {UserOauthContext} from "../context/UserContext";
 
 
 interface Values {
@@ -25,7 +25,7 @@ const Login = () => {
 
     const url = "http://localhost:5051/api/v1/auth/login"
 
-    const [user, setUser]= useContext(UserContext)
+    const {userOauth, setUserOauth}= useContext(UserOauthContext)
 
 
     const [values, setValues] = useState<Values>({
