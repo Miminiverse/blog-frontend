@@ -85,7 +85,8 @@ const handleUploadImage = async (image) => {
   }
 return (
 <>
-<form 
+        <div className="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center mx-auto my-6">
+        <form 
        
         id="form" 
         onSubmit={handleAddOAuth}
@@ -112,11 +113,13 @@ return (
               </div>
 
              <button 
+             className="m-2 items-center px-3 py-2 text-sm font-medium text-center  text-black rounded-lg bg-slate-50"
              type="submit">
               Add
              </button> 
 
         </form>
+        </div>
 </>
 )
 }
