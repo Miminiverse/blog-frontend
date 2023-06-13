@@ -30,8 +30,6 @@ const GetOAuthTodos = () => {
         console.log(error);
     }
   }
-console.log(otodos);
-
 
 
     return (

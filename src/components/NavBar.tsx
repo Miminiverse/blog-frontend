@@ -15,6 +15,8 @@ const NavBar = () => {
         setShowNav(!showNav)
     }
 
+    
+
     const handleGoogleLogout = () => {
       console.log("click delete")
       axios.get("http://localhost:5051/auth/logout", {withCredentials: true})
@@ -35,8 +37,10 @@ const NavBar = () => {
     return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
+      {userOauth && userOauth._doc?.username ? (
+        <span className={styles.navTitle}> Welcome {userOauth._doc.username}</span>
+      ): null}
 
-      <span className={styles.navTitle}> 📓 Todo 📓</span>
       <button onClick={handleGoogleLogout}>
             Logout
         </button>

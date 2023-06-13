@@ -30,7 +30,6 @@ export const UserOauthContextProvider = ({children}) => {
         axios.get("http://localhost:5051/account", {withCredentials: true})
         .then( res => {
             if (res.data) {
-                console.log({...res.data});
                 setUserOauth({...res.data})
             }
         })

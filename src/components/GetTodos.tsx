@@ -52,7 +52,7 @@ const GetTodos = () => {
                 { todos ? todos.map((todo) => (
             <div key={todo._id} >
             <div > 
-                <span  >{todo.title} </span>
+                <span>{todo.title} </span>
             </div>
           </div>
             )) : null }
