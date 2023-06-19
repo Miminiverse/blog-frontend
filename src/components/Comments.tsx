@@ -3,21 +3,27 @@ import React, {useEffect, useState, useContext, useRef} from 'react';
 import axios from 'axios';
 import {UserOauthContext} from "../context/UserContext";
 import { io, Socket } from 'socket.io-client';
+import MyComment from "./MyComment"
 
-export default function Comment({todo}) {
+export default function Comments({todo}) {
 
     const {userOauth, setUserOauth}= useContext(UserOauthContext)
     const [content, setContent] = useState<string>("")
+
     const [comments, setComments] = useState()
     const [arrivalComments, setArrivalComments] = useState<null>(null)
+
     const socket = useRef()
+
+
     
-    useEffect(() => {
-        if(userOauth) {
-            socket.current = io("http://localhost:5051")
-            socket.current.emit("online-user", userOauth?._doc.username, userOauth?._doc._id)
-        }
-    }, [userOauth])
+    // useEffect(() => {
+    //     if(userOauth) {
+    //         socket.current = io("http://localhost:5051")
+    //         socket.current.emit("online-user", userOauth?._doc.username, userOauth?._doc._id)
+    //     }
+    // }, [userOauth])
+
     
 
     const handleCreateComment = (e) => {
@@ -38,17 +44,13 @@ export default function Comment({todo}) {
             })
             .then(res => res.json())
             .then((data) => {
-                // setComments(prev => [...prev, {
-                //     username: userOauth?._doc.username,
-                //     content: content, 
-                // }])
+                setComments(prev => [...prev, {
+                    username: userOauth?._doc.username,
+                    content: content, 
+                }])
                setContent("")
             })
 
-            socket.current.emit("create-comment", {
-                content: content,
-                username: userOauth?._doc.username,
-            })
           } catch (error) {
             console.log(error);
         }
@@ -66,7 +68,6 @@ export default function Comment({todo}) {
                 })
                 .then(res => res.json())
                 .then((data) => {
-
                    setComments(data)
                 })
             
@@ -79,21 +80,6 @@ export default function Comment({todo}) {
             fetchComment()
         },[])
 
-        useEffect(() => {
-            if (socket.current) {
-                socket.current.on("broadcast-comment", (data) => {
-                    console.log(data);
-                    setArrivalComments({
-                        content: data.content,
-                        username: data.username,
-                    })
-                })
-            }
-        }, [])
-        
-        useEffect(() => {
-            arrivalComments && setComments((prev) => [...prev, arrivalComments])
-        }, [arrivalComments])
 
   return (
     <>
@@ -113,23 +99,16 @@ export default function Comment({todo}) {
         type="submit">
             Add
         </button>
-        {comments ? comments.map((comment, idx) => 
-        <div
-        className='m-2 px-3 py-2 rounded-lg bg-slate-50'
-        key={idx}
-        >
-            <div className="w-1/3 m-2 items-left text-sm font-semibold text-gray-600">
-                {comment.username}
-            </div>
-            <div className="w-2/3 m-2 text-sm font-mono">
-                {comment.content}
-            </div>
-        </div>) 
-        : null}
         </form>
 
-      
-
+        {comments ? comments.map((comment) => 
+        {return (
+          
+        <MyComment comment={comment} key={comment._id}/>
+ 
+        )}
+        )
+        : null}
     </div>
     </>
   )

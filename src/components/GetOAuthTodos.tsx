@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import AddOAuthTodos from "./AddOAuthTodos"
-import Comment from "./Comment"
+import Comments from "./Comments"
 
 const GetOAuthTodos = () => {
     const [otodos, setOTodos] = useState([])
@@ -38,8 +38,10 @@ const GetOAuthTodos = () => {
         <AddOAuthTodos  />
             {otodos ? otodos.map((item) => {
             return (
-                <>
-                <div className="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center mx-auto my-6">
+           
+                <div 
+                key={item._id}
+                className="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center mx-auto my-6">
                 <a href="#">
                     <img className="rounded-t-lg" src={item.pic} alt="image" />
                 </a>
@@ -54,9 +56,9 @@ const GetOAuthTodos = () => {
                     </a>
        
                 </div>
-                <Comment todo={item}/>
+                <Comments todo={item}/>
                 </div>
-                </>
+  
 
 
 
