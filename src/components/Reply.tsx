@@ -17,9 +17,7 @@ export default function Reply({reply}) {
         <div className="ml-10">
         {reply.reply}
         </div>
-        {/* {reply && reply._id ?
-         <MyComment comment={reply} key={reply._id}/>
-        : null} */}
+     
     </div>
         
         </>
