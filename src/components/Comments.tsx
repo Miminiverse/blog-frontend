@@ -4,17 +4,20 @@ import axios from 'axios';
 import {UserOauthContext} from "../context/UserContext";
 import { io, Socket } from 'socket.io-client';
 import MyComment from "./MyComment"
+import SingleComment from "./SingleComment"
+import ReplyComment from "./ReplyComment"
 
 export default function Comments({todo}) {
 
-    const {userOauth, setUserOauth}= useContext(UserOauthContext)
+    const {userOauth, setUserOauth, comments, setComments}= useContext(UserOauthContext)
     const [content, setContent] = useState<string>("")
 
-    const [comments, setComments] = useState()
+    // const [comments, setComments] = useState()
     const [arrivalComments, setArrivalComments] = useState<null>(null)
 
     const socket = useRef()
 
+    console.log(userOauth)
 
     
     // useEffect(() => {
@@ -29,25 +32,26 @@ export default function Comments({todo}) {
     const handleCreateComment = (e) => {
         e.preventDefault()
         
-        const url = `http://localhost:5051/api/v1/oauth/todos/comment/create/${todo._id}/${userOauth._doc._id}`
+        const url = `http://localhost:5051/api/v1/oauth/todos/comment/create`
         try {
             fetch(url, 
                 {
                 body: JSON.stringify({
-                    content
+                    content: content,
+                    username: userOauth._doc._id,
+                    todoId: todo._id,
                 }),
                 method:"POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 }
-            })
+            }
+            )
             .then(res => res.json())
             .then((data) => {
-                setComments(prev => [...prev, {
-                    username: userOauth?._doc.username,
-                    content: content, 
-                }])
+                console.log(data)
+                // setComments(data.comments)
                setContent("")
             })
 
@@ -58,17 +62,24 @@ export default function Comments({todo}) {
 
         const fetchComment = () => {
             
-            const url = `http://localhost:5051/api/v1/oauth/todos/comment/${todo._id}`
+            const url = `http://localhost:5051/api/v1/oauth/todos/comment/getComments`
             try {
             
                 fetch(url, 
                     {
-                    method:"GET",
-                    credentials: "include",
-                })
+                        body: JSON.stringify({
+                            todoId: todo._id,
+                        }),
+                        method:"POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                )
                 .then(res => res.json())
                 .then((data) => {
-                   setComments(data)
+                   setComments(data.comments)
                 })
             
               } catch (error) {
@@ -79,34 +90,36 @@ export default function Comments({todo}) {
         useEffect(()=>{
             fetchComment()
         },[])
-
+console.log(comments)
 
   return (
     <>
     <div>
+        <div className="flex m-auto items-center justify-center">
         <form onSubmit={handleCreateComment}>
-        <div className="m-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Comment
-        </div>
         <input
         className='bg-gray-50 border border-gray-300 p-2 rounded-lg'
         type="text"
         onChange={ (e) => setContent(e.target.value)}
         value={content}
+        placeholder='Write your comment'
         />
         <button 
-        className='p-2'
+        className='p-2 rounded-lg border text-white border-gray-300 m-2'
         type="submit">
             Add
         </button>
         </form>
+        </div>
 
         {comments ? comments.map((comment) => 
-        {return (
+        (!comment.parentId && 
+        <>
           
-        <MyComment comment={comment} key={comment._id}/>
- 
-        )}
+        <SingleComment comment={comment} key={comment._id} todo={todo}/>
+        <ReplyComment todo={todo} parentCommentId={comment._id}/>
+        </>
+        )
         )
         : null}
     </div>

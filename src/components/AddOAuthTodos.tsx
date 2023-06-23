@@ -85,7 +85,7 @@ const handleUploadImage = async (image) => {
   }
 return (
 <>
-        <div className="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 items-center mx-auto my-6">
+        <div className="p-2 m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow bg-black dark:border-gray-700 text-white items-center mx-auto">
         <form 
        
         id="form" 
@@ -94,7 +94,8 @@ return (
             <div>
             Title
             <Input 
-           onChange={handleOChange} id="title" name="title" title="title" >
+           onChange={handleOChange} id="title" name="title" title="title" 
+           className='w-full p-2 rounded-lg text-black outline-none'>
             </Input>
       
               </div>
@@ -102,14 +103,17 @@ return (
                 Content
               <Input 
             
-            onChange={handleOChange}  id="content" name="content" title="content" >
+            onChange={handleOChange}  id="content" name="content" title="content" 
+            className='w-full p-2 rounded-lg text-black outline-none' >
             </Input>
 
             <input 
             type="file"
             accept='image/*'
-            onChange={(e) => handleUploadImage(e.target.files[0])}  />
-    
+            onChange={(e) => handleUploadImage(e.target.files[0])}  
+            className="m-2"
+            />
+     
               </div>
 
              <button 

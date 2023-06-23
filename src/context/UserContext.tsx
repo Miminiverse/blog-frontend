@@ -26,6 +26,8 @@ export const UserOauthContextProvider = ({children}) => {
         loggedIn: false
     }))
 
+    const [comments, setComments] = useState()
+
     useEffect(() => {
         axios.get("http://localhost:5051/account", {withCredentials: true})
         .then( res => {
@@ -38,7 +40,7 @@ export const UserOauthContextProvider = ({children}) => {
 
 
     return (
-        <UserOauthContext.Provider value={{userOauth, setUserOauth}}>
+        <UserOauthContext.Provider value={{userOauth, setUserOauth, comments, setComments}}>
             {children}
         </UserOauthContext.Provider>
         
