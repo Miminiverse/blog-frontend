@@ -79,6 +79,7 @@ export default function Comments({todo}) {
                 )
                 .then(res => res.json())
                 .then((data) => {
+                    
                    setComments(data.comments)
                 })
             

@@ -24,7 +24,7 @@ function App() {
   return (
     <>
    <BrowserRouter>
-    <NavBar />
+    <NavBar/>
     <Routes>
       <Route path={paths.REGISTER} element={!jwt ? <Register /> : <Navigate to={paths.HOME} /> } />
       <Route path={paths.LOGIN} element={!jwt ? <Login /> : <Navigate to={paths.HOME} />} />

@@ -45,10 +45,11 @@ const Login = () => {
     const validateForm = () => {
         const { email, password } = values;
         if (email === "") {
-          toast.error("Email and Password is required.", toastOptions);
+            console.log("Email and Password is required")
+            
           return false;
         } else if (password === "") {
-          toast.error("Email and Password is required.", toastOptions);
+            console.log("Email and Password is required")
           return false;
         }
         return true;
@@ -80,8 +81,6 @@ const Login = () => {
     const googleLogin = () => {
         window.open("http://localhost:5051/auth/google", "_self")
     }
-
-
         return (
     <>
 

@@ -11,7 +11,6 @@ export default function SingleComment({comment, todo}) {
     const [openReply, setOpenReply] = useState(false)
     const [commentValue, setCommentValue] = useState("")
 
-    console.log(comments)
 
     const handleChange = (e) => {
         setCommentValue(e.target.value)
@@ -57,7 +56,7 @@ export default function SingleComment({comment, todo}) {
      return (
         <>
         <div>
-            <div className='mb-2 p-2'>
+            <div className='p-2'>
             {comment ?  (
                 <>
                 <div>

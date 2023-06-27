@@ -17,11 +17,12 @@ export default function ReplyComment({todo, parentCommentId}) {
 
     console.log(comments)
 
+
      return (
         <>
         <div>
             <button onClick={handleShowReplies}
-            className='text-white rounded-sm'
+            className='text-slate-300 rounded-sm text-sm m-2'
             >Show replies
             </button>
 
@@ -29,7 +30,7 @@ export default function ReplyComment({todo, parentCommentId}) {
             comments ? comments.map((comment) => (
                 <div>
                 {comment.parentId === parentCommentId &&
-                <div key={comment.parentId} className="ml-6">
+                <div key={comment.parentId} className="ml-8 border-l-2">
                 <SingleComment comment={comment} key={comment._id} todo={todo}/>
                 <ReplyComment todo={todo} parentCommentId={comment._id}/>
 

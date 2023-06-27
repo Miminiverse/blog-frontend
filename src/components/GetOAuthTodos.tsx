@@ -31,7 +31,7 @@ const GetOAuthTodos = () => {
     }
   }
 
-
+  console.log(document.cookie.includes('connect.sid'))
     return (
     <>
         <div className='bg-black'>

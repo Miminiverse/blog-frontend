@@ -85,7 +85,7 @@ const handleUploadImage = async (image) => {
   }
 return (
 <>
-        <div className="p-2 m-4 max-w-sm bg-white border border-gray-200 rounded-lg shadow bg-black dark:border-gray-700 text-white items-center mx-auto">
+        <div className="p-2 m-4 max-w-sm bg-black border border-gray-200 rounded-lg shadow bg-black dark:border-gray-700 text-white items-center mx-auto">
         <form 
        
         id="form" 

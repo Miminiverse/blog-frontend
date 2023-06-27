@@ -26,6 +26,8 @@ export const UserOauthContextProvider = ({children}) => {
         loggedIn: false
     }))
 
+    console.log(userOauth)
+
     const [comments, setComments] = useState()
 
     useEffect(() => {

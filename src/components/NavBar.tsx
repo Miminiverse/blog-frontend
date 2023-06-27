@@ -18,7 +18,6 @@ const NavBar = () => {
     
 
     const handleGoogleLogout = () => {
-      console.log("click delete")
       axios.get("http://localhost:5051/auth/logout", {withCredentials: true})
       .then (res => {
         if (res.data === "success") {
@@ -38,15 +37,16 @@ const NavBar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
       {userOauth && userOauth._doc?.username ? (
+        <>
         <span className={styles.navTitle}> Welcome {userOauth._doc.username}</span>
-      ): null}
-
-      <button onClick={handleGoogleLogout}>
+        <button onClick={handleGoogleLogout}>
             Logout
         </button>
-        <button onClick={handleLogout}>
-            Basic Logout
-        </button>
+        </>
+        
+      ): null}
+
+
         <div className={styles.menu} onClick={toggleNavItems}>
             <img src={burger} alt="burger menu" className={styles.burger}/>
         </div>
