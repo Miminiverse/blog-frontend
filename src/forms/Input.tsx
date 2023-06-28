@@ -21,7 +21,7 @@ const Input: FC<InpuProps> = ({ id, children,  ...inputProps }) => {
         <div>
         <label htmlFor={id}>{children}</label>
         <input
-        className="border flex-grow bg-white rounded-sm p-2"
+        className="border flex-grow bg-black rounded-sm p-2"
         id={id} 
         ref={inputRef}  {...inputProps}
         />

@@ -31,7 +31,7 @@ export default function SingleComment({comment, todo}) {
                 body: JSON.stringify({
                     content: commentValue,
                     username: userOauth._doc._id,
-                    todoId: todo._id,
+                    todoId: todo,
                     parentId: comment._id
                 }),
                 method:"POST",
@@ -56,7 +56,7 @@ export default function SingleComment({comment, todo}) {
      return (
         <>
         <div>
-            <div className='p-2'>
+            <div className='p-2 m-2 bg-slate-400 rounded-md'>
             {comment ?  (
                 <>
                 <div>
@@ -76,17 +76,23 @@ export default function SingleComment({comment, todo}) {
             </div>
 
             {openReply && 
-             <div>
+            <div>
              <form onSubmit={handleSubmit}>
+                <div className='flex flex-row gap-2 items-center justify-center'>
              <input 
              type="text"
              value={commentValue}
              onChange={handleChange}
-             className='bg-gray-50 border border-gray-300 p-2 rounded-lg'
+             placeholder='Write your comment'
+             className='bg-gray-50 border border-gray-300 p-2 ml-4 rounded-lg'
              />
-             <button type="submit"> Send Reply</button>
+             <button 
+             className='p-2'
+             type="submit">Add</button>
+                </div>
              </form>
-            </div>
+             </div>
+           
             }
            
           

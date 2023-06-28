@@ -77,7 +77,6 @@ const Register = () => {
 
         e.preventDefault()
         if (handleValidation()) {
-            console.log("hit");
             const { name, email, password } = values
 
             const {data} = await axios.post(url, {name,email,password})

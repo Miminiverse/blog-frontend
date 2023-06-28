@@ -6,7 +6,7 @@ import { io, Socket } from 'socket.io-client';
 import MyComment from './MyComment';
 
 export default function Reply({reply}) {
-    console.log(reply)
+
 
     return (
         <>

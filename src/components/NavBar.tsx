@@ -20,8 +20,11 @@ const NavBar = () => {
     const handleGoogleLogout = () => {
       axios.get("http://localhost:5051/auth/logout", {withCredentials: true})
       .then (res => {
+        console.log(res);
         if (res.data === "success") {
-          // console.log(res.data);
+        
+          
+  
           window.location.href = "/"
           // navigate("/")
         }

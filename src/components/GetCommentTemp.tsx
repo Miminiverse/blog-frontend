@@ -18,7 +18,7 @@ export default function GetCommentTemp() {
             })
             .then(res => res.json())
             .then((data) => {
-                console.log(data);
+
                 setComment(data)
             })
         

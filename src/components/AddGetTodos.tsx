@@ -23,7 +23,7 @@ export default function AddGetTodos ({setTodos}) {
 
 
   const handleUploadImage = (image) => {
-    console.log(image);
+
     
     // if (image.type === "image/jpeg" || image.type === "image/png") {
     //   const data = new FormData()

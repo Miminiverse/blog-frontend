@@ -3,11 +3,14 @@ import React, {useEffect, useState, useContext, useRef} from 'react';
 import axios from 'axios';
 import {UserOauthContext} from "../context/UserContext";
 import { io, Socket } from 'socket.io-client';
-import MyComment from "./MyComment"
 import SingleComment from "./SingleComment"
 import ReplyComment from "./ReplyComment"
+import { v4 as uuidv4 } from "uuid";
 
 export default function Comments({todo}) {
+
+
+
 
     const {userOauth, setUserOauth, comments, setComments}= useContext(UserOauthContext)
     const [content, setContent] = useState<string>("")
@@ -17,7 +20,7 @@ export default function Comments({todo}) {
 
     const socket = useRef()
 
-    console.log(userOauth)
+console.log(content)
 
     
     // useEffect(() => {
@@ -27,7 +30,8 @@ export default function Comments({todo}) {
     //     }
     // }, [userOauth])
 
-    
+
+
 
     const handleCreateComment = (e) => {
         e.preventDefault()
@@ -39,7 +43,7 @@ export default function Comments({todo}) {
                 body: JSON.stringify({
                     content: content,
                     username: userOauth._doc._id,
-                    todoId: todo._id,
+                    todoId: todo,
                 }),
                 method:"POST",
                 credentials: "include",
@@ -50,8 +54,8 @@ export default function Comments({todo}) {
             )
             .then(res => res.json())
             .then((data) => {
-                console.log(data)
-                // setComments(data.comments)
+                console.log({"addCommemt": data})
+                setComments(prev => [...prev, data.comments])
                setContent("")
             })
 
@@ -68,7 +72,7 @@ export default function Comments({todo}) {
                 fetch(url, 
                     {
                         body: JSON.stringify({
-                            todoId: todo._id,
+                            todoId: todo,
                         }),
                         method:"POST",
                         credentials: "include",
@@ -79,7 +83,7 @@ export default function Comments({todo}) {
                 )
                 .then(res => res.json())
                 .then((data) => {
-                    
+                    console.log({"fetchComment": data})
                    setComments(data.comments)
                 })
             
@@ -91,7 +95,7 @@ export default function Comments({todo}) {
         useEffect(()=>{
             fetchComment()
         },[])
-console.log(comments)
+
 
   return (
     <>
@@ -106,20 +110,20 @@ console.log(comments)
         placeholder='Write your comment'
         />
         <button 
-        className='p-2 rounded-lg border text-white border-gray-300 m-2'
+        className='p-2 rounded-lg border text-black border-gray-300 m-2'
         type="submit">
             Add
         </button>
         </form>
         </div>
 
-        {comments ? comments.map((comment) => 
+        {comments ? comments.map((comment:any) => 
         (!comment.parentId && 
-        <>
+        (<div>
           
         <SingleComment comment={comment} key={comment._id} todo={todo}/>
-        <ReplyComment todo={todo} parentCommentId={comment._id}/>
-        </>
+        {comment._id && <ReplyComment todo={todo} key={uuidv4()} parentCommentId={comment._id}/>}
+        </div>)
         )
         )
         : null}

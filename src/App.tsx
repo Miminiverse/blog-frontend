@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import {UserContext, UserOauthContext} from "./context/UserContext";
 import GetTodos from './components/GetTodos';
 import GetOAuthTodos from './components/GetOAuthTodos';
+import GetOAuthTodo from './components/GetOAuthTodo';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Route path={paths.LOGIN} element={!jwt ? <Login /> : <Navigate to={paths.HOME} />} />
       <Route path={paths.HOME} element={jwt ? <GetTodos /> : <Navigate to={paths.LOGIN} />} />
       <Route path={paths.OAuthTodo} element={ <GetOAuthTodos />}/>
+      <Route path={paths.OAuthOneTodo} element={ <GetOAuthTodo />}/>
 
     </Routes>
     </BrowserRouter>
