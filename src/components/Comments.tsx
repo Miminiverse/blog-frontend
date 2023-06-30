@@ -9,18 +9,16 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Comments({todo}) {
 
-
+console.log(todo);
 
 
     const {userOauth, setUserOauth, comments, setComments}= useContext(UserOauthContext)
     const [content, setContent] = useState<string>("")
-
-    // const [comments, setComments] = useState()
     const [arrivalComments, setArrivalComments] = useState<null>(null)
 
     const socket = useRef()
 
-console.log(content)
+
 
     
     // useEffect(() => {
@@ -31,34 +29,35 @@ console.log(content)
     // }, [userOauth])
 
 
-
-
     const handleCreateComment = (e) => {
         e.preventDefault()
         
         const url = `http://localhost:5051/api/v1/oauth/todos/comment/create`
         try {
-            fetch(url, 
-                {
-                body: JSON.stringify({
-                    content: content,
-                    username: userOauth._doc._id,
-                    todoId: todo,
-                }),
-                method:"POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
+         
+                fetch(url, 
+                    {
+                    body: JSON.stringify({
+                        content: content,
+                        username: userOauth._doc._id,
+                        todoId: todo,
+                        parentId: null
+                    }),
+                    method:"POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
-            }
-            )
-            .then(res => res.json())
-            .then((data) => {
-                console.log({"addCommemt": data})
-                setComments(prev => [...prev, data.comments])
-               setContent("")
-            })
-
+                )
+                .then(res => res.json())
+                .then((data) => {
+                    console.log({"addComment": data})
+                    setComments((prev:any) => [ data.result[0], ...prev])
+                   setContent("")
+                })
+            
+        
           } catch (error) {
             console.log(error);
         }
@@ -116,18 +115,24 @@ console.log(content)
         </button>
         </form>
         </div>
+   
 
-        {comments ? comments.map((comment:any) => 
-        (!comment.parentId && 
-        (<div>
-          
-        <SingleComment comment={comment} key={comment._id} todo={todo}/>
-        {comment._id && <ReplyComment todo={todo} key={uuidv4()} parentCommentId={comment._id}/>}
-        </div>)
-        )
-        )
-        : null}
+        {comments && comments.map((comment:any) => (
+            (
+                comment.parentId === null && 
+                <React.Fragment>
+                    <SingleComment comment={comment} key={comment._id} todo={todo}/>
+                    <ReplyComment todo={todo} parentCommentId={comment._id}/> 
+                    
+                </React.Fragment>
+
+
+            )
+        ))}
+    
     </div>
     </>
   )
 }
+
+

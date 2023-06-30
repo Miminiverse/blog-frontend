@@ -6,7 +6,7 @@ import { io, Socket } from 'socket.io-client';
 import SingleComment from './SingleComment';
 import ReplyComment from "./ReplyComment"
 import { PiArrowBendDownRightLight } from "react-icons/pi";
-import { v4 as uuidv4 } from "uuid";
+
 
 export default function ReplyComment({todo, parentCommentId}) {
 
@@ -57,7 +57,7 @@ export default function ReplyComment({todo, parentCommentId}) {
                 {comment?.parentId === parentCommentId &&
                 <div className="ml-8 border-l-2">
                 <SingleComment comment={comment} key={comment._id} todo={todo}/>
-                {comment._id && <ReplyComment todo={todo} key={uuidv4()} parentCommentId={comment._id}/>}
+                <ReplyComment todo={todo} parentCommentId={comment._id}/>
 
                 </div>
                 }

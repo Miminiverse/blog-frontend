@@ -18,6 +18,19 @@ export const UserContextProvider = ({children}) => {
     )
 }
 
+
+interface IComment {
+    _id: string, 
+    parentId?: string | null,
+    username: {
+        googleId: string,
+        username: string 
+        _id: string,
+    }, 
+    todoId: string, 
+    content: string
+}
+
 export const UserOauthContext = createContext(null)
 
 export const UserOauthContextProvider = ({children}) => {
@@ -27,7 +40,7 @@ export const UserOauthContextProvider = ({children}) => {
     }))
 
 
-    const [comments, setComments] = useState()
+    const [comments, setComments] = useState<IComment>()
 
     useEffect(() => {
         axios.get("http://localhost:5051/account", {withCredentials: true})

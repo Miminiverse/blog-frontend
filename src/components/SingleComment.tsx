@@ -43,7 +43,7 @@ export default function SingleComment({comment, todo}) {
             )
             .then(res => res.json())
             .then((data) => {
-                console.log(data.result[0])
+                console.log(data)
                 setComments(prev => [...prev, data.result[0]])
                 setCommentValue("")
                 setOpenReply(false)
