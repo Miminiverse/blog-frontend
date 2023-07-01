@@ -5,7 +5,7 @@ import {UserOauthContext} from "../context/UserContext";
 import { io, Socket } from 'socket.io-client';
 import REPLY from "../assets/reply.png";
 
-export default function SingleComment({comment, todo}) {
+export default function SingleComment({comment, todo, fetchComment}) {
 
     const {userOauth, setUserOauth, comments, setComments}= useContext(UserOauthContext)
     const [openReply, setOpenReply] = useState(false)
@@ -22,8 +22,6 @@ export default function SingleComment({comment, todo}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
-              
         const url = `http://localhost:5051/api/v1/oauth/todos/comment/create`
         try {
             fetch(url, 
@@ -43,10 +41,10 @@ export default function SingleComment({comment, todo}) {
             )
             .then(res => res.json())
             .then((data) => {
-                console.log(data)
-                setComments(prev => [...prev, data.result[0]])
+                setComments(prev => [data.result[0],...prev])
                 setCommentValue("")
                 setOpenReply(false)
+                fetchComment()
             })
 
           } catch (error) {
@@ -71,12 +69,15 @@ export default function SingleComment({comment, todo}) {
             onClick={handleClick}
             className='text-red-300 text-sm'
             >
-             <img className="ml-4 h-4 w-4" src={REPLY} alt='reply' />
+                <div className='flex flex-row gap-1 text-center items-center'>
+             <img className="ml-4 h-4 w-4" src={REPLY} alt='reply' /> 
+             <span className='text-slate-600 text-sm'>Reply</span>
+                </div>
             </button>
             </div>
 
             {openReply && 
-            <div>
+            
              <form onSubmit={handleSubmit}>
                 <div className='flex flex-row gap-2 items-center justify-center'>
              <input 
@@ -91,7 +92,7 @@ export default function SingleComment({comment, todo}) {
              type="submit">Add</button>
                 </div>
              </form>
-             </div>
+             
            
             }
            

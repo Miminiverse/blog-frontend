@@ -5,13 +5,13 @@ import Input from '../forms/Input';
 import axios from 'axios';
 import {UserOauthContext} from "../context/UserContext";
 
-export default function AddOAuthTodos () {
+export default function AddOAuthTodos ({onAddOAuthTodos}) {
 
   const [ovalues, setOValues] = useState({
     title: "",
     content: "",
   })
-  const [pic, setPic] = useState()
+  const [pic, setPic] = useState("")
 
   const {userOauth, setUserOauth}= useContext(UserOauthContext)
 
@@ -22,9 +22,6 @@ export default function AddOAuthTodos () {
       ...ovalues, 
       [e.target.name] : e.target.value})
 }
-
-
-
 
 
 const handleAddOAuth = (e: ChangeEvent<HTMLFormElement>) => {
@@ -46,6 +43,17 @@ const handleAddOAuth = (e: ChangeEvent<HTMLFormElement>) => {
         headers: {
             "Content-Type": "application/json"
         }
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("Blog added successfully")
+      onAddOAuthTodos(data.Otodo)
+      setOValues({
+        title: "",
+        content: "",
+      })
+
+      
     })
 
   } catch (error) {
@@ -74,8 +82,7 @@ const handleUploadImage = async (image) => {
       .then(res => res.json())
       .then(data => {
         setPic(data.url.toString())
-        // console.log(data.url.toString());
-        
+        alert("Image upload successfully")
       })
       .catch((err) => {
         console.log(err);
@@ -95,11 +102,13 @@ return (
             Title
             <input 
            onChange={handleOChange} id="title" name="title" title="title" 
+           value={ovalues.title}
            className='bg-slate-200 w-full p-2 rounded-lg text-black outline-none'/>
            </div>
             <div>
                 Content
             <input 
+           value={ovalues.content}
             
             onChange={handleOChange}  id="content" name="content" title="content" 
             className='bg-slate-200 w-full p-2 rounded-lg text-black outline-none'/>

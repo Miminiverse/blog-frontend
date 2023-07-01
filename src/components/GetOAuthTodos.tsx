@@ -32,22 +32,29 @@ const GetOAuthTodos = () => {
     }
   }
 
+  console.log(otodos);
+  
+
   const getOTodo = (item) => {
     window.location.href("/otodo")
+  }
+
+  const onAddOAuthTodos = (Otodos) => {
+    setOTodos(prev => [Otodos, ...prev])
   }
 
 
     return (
     <>
         <div className='bg-white'>
-        <AddOAuthTodos  />
+        <AddOAuthTodos  onAddOAuthTodos={onAddOAuthTodos}/>
             {otodos ? otodos.map((item) => {
             return (
            
                 <div
    
                 key={item._id}
-                className="p-2 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-slate-300 items-center mx-auto my-6">
+                className="p-2 max-w-md bg-white border border-gray-200 rounded-lg shadow dark:bg-white dark:border-slate-300 items-center mx-auto my-6">
                
                 <a href="#">
                     <img className="rounded-t-lg" src={item.pic} alt="image" />

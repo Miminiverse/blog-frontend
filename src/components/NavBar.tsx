@@ -49,16 +49,10 @@ const NavBar = () => {
         
       ): null}
 
-
         <div className={styles.menu} onClick={toggleNavItems}>
             <img src={burger} alt="burger menu" className={styles.burger}/>
         </div>
         <div className={`${styles.navElements} ${ showNav ? styles.active : ""}`}>
-        <ul>
-        <li>
-            <a href={paths.HOME} >Home</a>
-          </li>
-        </ul>
       </div>
       </div>
     </nav>

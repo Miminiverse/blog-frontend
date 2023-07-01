@@ -6,13 +6,15 @@ import { io, Socket } from 'socket.io-client';
 import SingleComment from './SingleComment';
 import ReplyComment from "./ReplyComment"
 import { PiArrowBendDownRightLight } from "react-icons/pi";
+import { v4 as uuidv4 } from "uuid";
 
 
-export default function ReplyComment({todo, parentCommentId}) {
+export default function ReplyComment({todo, parentCommentId, fetchComment}) {
 
     const {userOauth, setUserOauth, comments, setComments}= useContext(UserOauthContext)
     const [showReplies, setShowReplies] = useState(false)
     const [commentNumber, setCommentNumber] = useState<number>()
+
 
     const handleShowReplies = () => {
         setShowReplies(!showReplies)
@@ -28,15 +30,12 @@ export default function ReplyComment({todo, parentCommentId}) {
             })
         }
         setCommentNumber(commentNum)
-    }, [])
+    }, [comments])
 
      return (
         <>
-
-          
         <div>
-            {commentNumber > 0 && (
-                
+            {commentNumber ? commentNumber > 0 && (
                 <div className='flex flex-row'>
                   <div className='h-4 w-4 pt-2'>
                   <PiArrowBendDownRightLight />
@@ -48,16 +47,16 @@ export default function ReplyComment({todo, parentCommentId}) {
                 </button>
                 </div>
         
-            )}
+            ): null}
      
 
             {showReplies && (
             comments ? comments.map((comment:any) => (
-                <div>
+                <div key={comment._id}>
                 {comment?.parentId === parentCommentId &&
-                <div className="ml-8 border-l-2">
-                <SingleComment comment={comment} key={comment._id} todo={todo}/>
-                <ReplyComment todo={todo} parentCommentId={comment._id}/>
+                <div  className="ml-8 border-l-2">
+                <SingleComment comment={comment}  todo={todo} fetchComment={fetchComment} />
+                <ReplyComment todo={todo} parentCommentId={comment._id} fetchComment={fetchComment}/>
 
                 </div>
                 }
